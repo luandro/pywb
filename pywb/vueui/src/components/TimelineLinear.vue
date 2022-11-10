@@ -1,7 +1,7 @@
 <template>
   <div class="timeline-linear">
     <div class="title">
-      <div>{{ period.getFullReadableId() }}</div>
+      <div>{{ displayDate }}</div>
       <div>{{ $root._(period.snapshotCount !== 1 ? '{count} captures':'{count} capture', {count: period.snapshotCount}) }}</div>
     </div>
 
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { PywbI18N } from "../i18n";
+
 export default {
   name: "TimelineLinear",
   props: ['period', 'currentSnapshot'],
@@ -31,6 +33,9 @@ export default {
     containsCurrentSnapshot() {
       return this.currentSnapshot &&
           this.period.contains(this.currentSnapshot);
+    },
+    displayDate() {
+      return new Date(this.period.fullId).toLocaleDateString(PywbI18N.getLocale());
     }
   },
   methods: {
